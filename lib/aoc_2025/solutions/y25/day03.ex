@@ -15,7 +15,7 @@ defmodule Aoc2025.Solutions.Y25.Day03 do
 
   def part_one(problem) do
     problem
-    |> find_max_joltages([])
+    |> find_max_joltages_n(2, [])
     |> Enum.sum()
   end
 
@@ -50,30 +50,5 @@ defmodule Aoc2025.Solutions.Y25.Day03 do
 
     remaining = Enum.drop(batteries, best_idx + 1)
     pick_n_greedy(remaining, n - 1, [best_val | acc])
-  end
-
-  defp find_max_joltages([], acc), do: acc
-
-  defp find_max_joltages([head | rest], acc) do
-    find_max_joltages(rest, [find_max_joltage(head) | acc])
-  end
-
-  defp find_max_joltage(batteries) do
-    batteries
-    |> generate_all_combinations([])
-    |> Enum.max()
-  end
-
-  defp generate_all_combinations([], acc), do: acc
-
-  defp generate_all_combinations([head | rest], acc) do
-    generate_all_combinations(rest, generate_combinations(head, rest) ++ acc)
-  end
-
-  defp generate_combinations(_battery, []), do: []
-
-  defp generate_combinations(battery, batteries) do
-    batteries
-    |> Enum.map(fn b -> String.to_integer("#{battery}#{b}") end)
   end
 end
