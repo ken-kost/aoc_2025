@@ -15,23 +15,23 @@ defmodule Aoc2025.Solutions.Y25.Day03 do
 
   def part_one(problem) do
     problem
-    |> find_max_joltages_n(2, [])
+    |> find_max_joltages(2, [])
     |> Enum.sum()
   end
 
   def part_two(problem) do
     problem
-    |> find_max_joltages_n(12, [])
+    |> find_max_joltages(12, [])
     |> Enum.sum()
   end
 
-  defp find_max_joltages_n([], _n, acc), do: acc
+  defp find_max_joltages([], _n, acc), do: acc
 
-  defp find_max_joltages_n([head | rest], n, acc) do
-    find_max_joltages_n(rest, n, [find_max_joltage_n(head, n) | acc])
+  defp find_max_joltages([head | rest], n, acc) do
+    find_max_joltages(rest, n, [find_max_joltage(head, n) | acc])
   end
 
-  defp find_max_joltage_n(batteries, n) do
+  defp find_max_joltage(batteries, n) do
     pick_n_greedy(batteries, n, [])
     |> Enum.join("")
     |> String.to_integer()
