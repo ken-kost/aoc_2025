@@ -39,30 +39,15 @@ defmodule Aoc2025.Solutions.Y25.Day04 do
   defp find_roles_of_paper([{{x, y}, is_paper} | rest], problem, acc, new_problem) do
     condition = is_paper and less_than_four_neighbors?(x, y, problem)
     acc = if condition, do: acc + 1, else: acc
-
-    new_problem =
-      if condition,
-        do: Map.put(new_problem, {x, y}, false),
-        else: Map.put(new_problem, {x, y}, is_paper)
-
+    is_paper = not condition and is_paper
+    new_problem = Map.put(new_problem, {x, y}, is_paper)
     find_roles_of_paper(rest, problem, acc, new_problem)
   end
 
   defp less_than_four_neighbors?(x, y, problem) do
-    Enum.count(
-      [
-        {x - 1, y},
-        {x + 1, y},
-        {x, y - 1},
-        {x, y + 1},
-        {x - 1, y - 1},
-        {x + 1, y - 1},
-        {x - 1, y + 1},
-        {x + 1, y + 1}
-      ],
-      fn {x, y} ->
-        Map.get(problem, {x, y}, false)
-      end
-    ) < 4
+    Enum.zip([-1, 1, 0, 0, -1, 1, -1, 1], [0, 0, -1, 1, -1, -1, 1, 1])
+    |> Enum.map(fn {x_diff, y_diff} -> {x + x_diff, y + y_diff} end)
+    |> Enum.filter(fn {x, y} -> Map.get(problem, {x, y}, false) end)
+    |> length() < 4
   end
 end

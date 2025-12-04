@@ -52,9 +52,9 @@ defmodule Aoc2025.Solutions.Y25.Day04Test do
     assert 43 == solve(input, :part_two)
   end
 
-  # @part_two_solution CHANGE_ME
-  #
-  # test "part two solution" do
-  #   assert {:ok, @part_two_solution} == AoC.run(2025, 4, :part_two)
-  # end
+  @part_two_solution 8746
+
+  test "part two solution" do
+    assert {:ok, @part_two_solution} == AoC.run(2025, 4, :part_two)
+  end
 end
